@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Extensions.Configuration;
+using WeatherMonitoringAndReportingService.DataParsing;
 
 namespace WeatherMonitoringAndReportingService
 {
@@ -13,7 +14,24 @@ namespace WeatherMonitoringAndReportingService
             .Build();
 
             var appSettingReader = new AppSettingsReader(configuration);
-            Console.WriteLine(appSettingReader.GetWeatherSettings("RainBot"));
+            while (true)
+            {
+                try
+                {
+                    string data = Console.ReadLine();
+                    DataParsingStrategyFactory factory = new DataParsingStrategyFactory();
+                    var parsingStrategy = factory.CreateDataParsingStrategy(data);
+                    var parser = new DataParserContext(parsingStrategy);
+                    var result = parser.ParseData(data);
+                    Console.WriteLine(result.Temperature);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine($"An exception occurred: {e.Message}");
+                }
+
+            }
+
         }
     }
 }

@@ -11,10 +11,16 @@ namespace WeatherMonitoringAndReportingService
         {
             _configuration = configuration;
         }
-
         public WeatherSettings GetWeatherSettings(string key)
         {
-            return _configuration.GetSection(key).Get<WeatherSettings>() ?? new WeatherSettings();
+            try
+            {
+                return _configuration.GetSection(key).Get<WeatherSettings>();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"No WeatherSettings found for key '{key}'", ex);
+            }
         }
     }
 }
