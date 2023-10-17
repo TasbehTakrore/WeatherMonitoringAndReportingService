@@ -4,22 +4,22 @@ using WeatherMonitoringAndReportingService.Models;
 
 namespace WeatherMonitoringAndReportingService
 {
-    internal class AppSettingsReader
+    internal class BotSettingsReader
     {
         private readonly IConfiguration _configuration;
-        public AppSettingsReader(IConfiguration configuration)
+        public BotSettingsReader(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-        public WeatherSettings GetWeatherSettings(string key)
+        public BotSettings GetBotSettings(string key)
         {
             try
             {
-                return _configuration.GetSection(key).Get<WeatherSettings>();
+                return _configuration.GetSection(key).Get<BotSettings>();
             }
             catch (Exception ex)
             {
-                throw new Exception($"No WeatherSettings found for key '{key}'", ex);
+                throw new Exception($"No BotSettings found for key '{key}'", ex);
             }
         }
     }

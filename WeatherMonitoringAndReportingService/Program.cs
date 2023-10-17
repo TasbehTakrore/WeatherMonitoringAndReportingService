@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.Extensions.Configuration;
 using WeatherMonitoringAndReportingService.DataParsing;
+using WeatherMonitoringAndReportingService.WeatherReportPublishing;
 
 namespace WeatherMonitoringAndReportingService
 {
@@ -13,7 +14,14 @@ namespace WeatherMonitoringAndReportingService
             .AddJsonFile("appsettings.json")
             .Build();
 
-            var appSettingReader = new AppSettingsReader(configuration);
+            var appSettingReader = new BotSettingsReader(configuration);
+            WeatherReportPublisher weatherReportPublisher = new WeatherReportPublisher();
+            var rainBot = new RainBot(appSettingReader.GetBotSettings("RainBot"));
+            var SunBot = new SunBot(appSettingReader.GetBotSettings("SunBot"));
+            var SnowBot = new SnowBot(appSettingReader.GetBotSettings("SnowBot"));
+            weatherReportPublisher.Subscribe(rainBot);
+            weatherReportPublisher.Subscribe(SunBot);
+            weatherReportPublisher.Subscribe(SnowBot);
             while (true)
             {
                 try
@@ -23,7 +31,9 @@ namespace WeatherMonitoringAndReportingService
                     var parsingStrategy = factory.CreateDataParsingStrategy(data);
                     var parser = new DataParserContext(parsingStrategy);
                     var result = parser.ParseData(data);
-                    Console.WriteLine(result.Temperature);
+                    Console.WriteLine(result);
+                    weatherReportPublisher.ChangeWeatherData(result);
+
                 }
                 catch(Exception e)
                 {
