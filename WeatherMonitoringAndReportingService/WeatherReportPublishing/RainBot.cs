@@ -18,6 +18,7 @@ namespace WeatherMonitoringAndReportingService.WeatherReportPublishing
                 Console.WriteLine();
                 Console.WriteLine("RainBot activated!");
                 Console.WriteLine($"RainBot: {_botSettings.Message}");
+                Console.WriteLine();
             }
         }
     }

@@ -17,9 +17,9 @@ namespace WeatherMonitoringAndReportingService
             {
                 return _configuration.GetSection(key).Get<BotSettings>();
             }
-            catch (Exception ex)
+            catch
             {
-                throw new Exception($"No BotSettings found for key '{key}'", ex);
+                throw new Exception($"No BotSettings found for key '{key}'");
             }
         }
     }

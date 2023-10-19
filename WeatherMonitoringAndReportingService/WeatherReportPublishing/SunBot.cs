@@ -18,6 +18,7 @@ namespace WeatherMonitoringAndReportingService.WeatherReportPublishing
                 Console.WriteLine();
                 Console.WriteLine("SunBot activated!");
                 Console.WriteLine($"SunBot: {_botSettings.Message}");
+                Console.WriteLine();
             }
         }
     }

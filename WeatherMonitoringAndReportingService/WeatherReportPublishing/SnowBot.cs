@@ -13,11 +13,12 @@ namespace WeatherMonitoringAndReportingService.WeatherReportPublishing
         }
         public void Run(WeatherData weatherData)
         {
-            if(weatherData.Temperature <  _botSettings.TemperatureThreshold)
+            if (weatherData.Temperature < _botSettings.TemperatureThreshold)
             {
                 Console.WriteLine();
                 Console.WriteLine("SnowBot activated!");
                 Console.WriteLine($"SnowBot: {_botSettings.Message}");
+                Console.WriteLine();
             }
         }
     }

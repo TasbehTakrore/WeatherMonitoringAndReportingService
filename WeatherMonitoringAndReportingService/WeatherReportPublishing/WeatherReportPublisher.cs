@@ -11,11 +11,14 @@ namespace WeatherMonitoringAndReportingService.WeatherReportPublishing
         {
             weatherObservers.Add(observerBot);
         }
+        public void Subscribe(List<IWeatherObserver> observerBots)
+        {
+            weatherObservers.AddRange(observerBots);
+        }
         public void Unsubscribe(IWeatherObserver observerBot)
         {
             weatherObservers.Remove(observerBot);
         }
-
         public void NotifySubscribers(WeatherData weatherData)
         {
             foreach (var weatherObserver in weatherObservers)
@@ -23,7 +26,6 @@ namespace WeatherMonitoringAndReportingService.WeatherReportPublishing
                 weatherObserver.Run(weatherData);
             }
         }
-
         public void ChangeWeatherData(WeatherData weatherData)
         {
             NotifySubscribers(weatherData);
