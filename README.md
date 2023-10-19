@@ -106,7 +106,7 @@ To use the Real-time Weather Monitoring and Reporting Service, follow these step
 ### Project Structure
 
 ````
-C:.
+WeatherMonitoringAndReportingService
 │   appsettings.json
 │   BotSettingsReader.cs
 │   Program.cs
