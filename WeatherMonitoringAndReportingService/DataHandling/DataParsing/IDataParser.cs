@@ -2,9 +2,8 @@
 
 namespace WeatherMonitoringAndReportingService.DataHandling.DataParsing
 {
-    public interface IDataParsingStrategy
+    public interface IDataParser
     {
         WeatherData ParseData(string data);
-        bool IsDataCompatible(string data);
     }
 }

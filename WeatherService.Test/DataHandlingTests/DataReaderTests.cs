@@ -8,10 +8,9 @@ namespace WeatherService.Test.DataHandlingTests
     {
         [Theory]
         [AutoData]
-        internal void ReadRawData_ShouldReadData(DataReader sut)
+        internal void ReadRawData_ShouldReadData(string fakeInput, DataReader sut)
         {
             //Arrange
-            var fakeInput = "Test input";
             using (var fakeInputReader = new StringReader(fakeInput))
             {
                 Console.SetIn(fakeInputReader);
