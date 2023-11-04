@@ -1,7 +1,7 @@
 ﻿
 namespace WeatherMonitoringAndReportingService.Models
 {
-    internal class BotSettings
+    public class BotSettings
     {
         public bool Enabled { get; set; }
         public int TemperatureThreshold { get; set; }
