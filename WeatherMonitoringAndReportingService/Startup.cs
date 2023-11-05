@@ -6,20 +6,25 @@ using WeatherMonitoringAndReportingService.WeatherReportPublishing;
 
 namespace WeatherMonitoringAndReportingService
 {
-    internal static class Startup
+    public static class Startup
     {
-        public static (DataParser, WeatherReportPublisher, DataReader) InitializeWeatherMonitoringService()
+        public static object CreateAndSubscribeWeatherReportPublisher()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static (IDataParser, IWeatherReportPublisher, IDataReader) InitializeWeatherMonitoringService()
         {
             IConfiguration configuration = BuildConfiguration();
             BotSettingsReader botSettingReader = new BotSettingsReader(configuration);
-            WeatherBotFactory weatherBotFactory = new WeatherBotFactory(botSettingReader);
+            IWeatherBotFactory weatherBotFactory = new WeatherBotFactory(botSettingReader);
             List<IDataParsingStrategy> parsingStrategies = new List<IDataParsingStrategy>
             {
                 new XmlParsingStrategy(),
                 new JsonParsingStrategy()
             };
-            DataParser dataParser = new DataParser(parsingStrategies);
-            DataReader dataReader = new DataReader();
+            IDataParser dataParser = new DataParser(parsingStrategies);
+            IDataReader dataReader = new DataReader();
             return (dataParser, CreateAndSubscribeWeatherReportPublisher(weatherBotFactory), dataReader);
         }
 
@@ -31,7 +36,7 @@ namespace WeatherMonitoringAndReportingService
                 .Build();
         }
 
-        private static WeatherReportPublisher CreateAndSubscribeWeatherReportPublisher(WeatherBotFactory factory)
+        private static WeatherReportPublisher CreateAndSubscribeWeatherReportPublisher(IWeatherBotFactory factory)
         {
             WeatherReportPublisher weatherReportPublisher = new WeatherReportPublisher();
             var bots = factory.GetEnabledWeatherObservers();

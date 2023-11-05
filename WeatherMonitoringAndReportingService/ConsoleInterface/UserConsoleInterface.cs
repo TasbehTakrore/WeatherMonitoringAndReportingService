@@ -4,7 +4,7 @@ using WeatherMonitoringAndReportingService.WeatherReportPublishing;
 
 namespace WeatherMonitoringAndReportingService.ConsoleInterface
 {
-    internal class UserConsoleInterface : IUserConsoleInterface
+    public class UserConsoleInterface : IUserConsoleInterface
     {
         private readonly IDataParser _dataParser;
         private readonly IWeatherReportPublisher _weatherReportPublisher;

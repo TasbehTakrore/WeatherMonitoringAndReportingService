@@ -25,7 +25,7 @@ namespace WeatherMonitoringAndReportingService.BotFactory
 
                 return enabledBots;
             }
-            catch (Exception ex)
+            catch
             {
                 throw new Exception("Failed to create bots. An error occurred while initializing bot instances.");
             }

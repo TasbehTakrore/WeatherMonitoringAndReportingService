@@ -14,11 +14,13 @@ namespace WeatherService.Test.BotFactory
         public void GetEnabledWeatherObservers_InvalidBotSettings_ThrowException(
             [Frozen] Mock<IBotSettingsReader> mockBotSettingsReader, WeatherBotFactory sut)
         {
+            mockBotSettingsReader.Setup(reader => reader.GetBotSettings(It.IsAny<string>()))
+                .Throws(new Exception());
+
             //Act & Assert
             Action Act = () => sut.GetEnabledWeatherObservers();
             Act.Should().Throw<Exception>().WithMessage(
                 "Failed to create bots. An error occurred while initializing bot instances.");
-
         }
 
         [Theory]
