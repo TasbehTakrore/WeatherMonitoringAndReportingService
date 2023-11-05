@@ -12,7 +12,6 @@ namespace WeatherService.Test.DataHandlingTests.DataParsingTests
         [AutoMoqData]
         public void ParseData_NoSuitableStrategy_ThrowsException(
           [Frozen] Mock<IDataParsingStrategy> mockStrategy,
-          [Frozen] List<IDataParsingStrategy> strategies,
           string invalidData,
           DataParser sut)
         {
@@ -29,7 +28,6 @@ namespace WeatherService.Test.DataHandlingTests.DataParsingTests
         [AutoMoqData]
         public void ParseData_ValidData_ReturnsParsedData(
           [Frozen] Mock<IDataParsingStrategy> mockStrategy,
-          [Frozen] List<IDataParsingStrategy> strategies,
           string validData,
           WeatherData expectedResult,
           DataParser sut)
