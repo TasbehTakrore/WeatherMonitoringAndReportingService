@@ -3,7 +3,7 @@ using WeatherMonitoringAndReportingService.Models;
 
 namespace WeatherMonitoringAndReportingService.WeatherReportPublishing
 {
-    internal class WeatherReportPublisher : IWeatherReportPublisher
+    public class WeatherReportPublisher : IWeatherReportPublisher
     {
         private List<IWeatherObserver> weatherObservers = new List<IWeatherObserver>();
 
@@ -19,6 +19,10 @@ namespace WeatherMonitoringAndReportingService.WeatherReportPublishing
         {
             weatherObservers.Remove(observerBot);
         }
+        public List<IWeatherObserver> GetSubscribers()
+        {
+            return weatherObservers;
+        }
         public void NotifySubscribers(WeatherData weatherData)
         {
             foreach (var weatherObserver in weatherObservers)
@@ -26,7 +30,7 @@ namespace WeatherMonitoringAndReportingService.WeatherReportPublishing
                 weatherObserver.Run(weatherData);
             }
         }
-        public void ChangeWeatherData(WeatherData weatherData)
+        public void PublishData(WeatherData weatherData)
         {
             NotifySubscribers(weatherData);
         }

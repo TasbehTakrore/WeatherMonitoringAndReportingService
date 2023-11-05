@@ -6,11 +6,11 @@ namespace WeatherMonitoringAndReportingService.ConsoleInterface
 {
     internal class UserConsoleInterface : IUserConsoleInterface
     {
-        private readonly DataParser _dataParser;
-        private readonly WeatherReportPublisher _weatherReportPublisher;
-        private readonly DataReader _dataReader;
+        private readonly IDataParser _dataParser;
+        private readonly IWeatherReportPublisher _weatherReportPublisher;
+        private readonly IDataReader _dataReader;
 
-        public UserConsoleInterface(DataParser dataParser, WeatherReportPublisher weatherReportPublisher, DataReader dataReader)
+        public UserConsoleInterface(IDataParser dataParser, IWeatherReportPublisher weatherReportPublisher, IDataReader dataReader)
         {
             _dataParser = dataParser;
             _weatherReportPublisher = weatherReportPublisher;
@@ -26,7 +26,7 @@ namespace WeatherMonitoringAndReportingService.ConsoleInterface
                     Console.Write("Enter Raw Weather Data (json or xml format): ");
                     string rawWeatherData = _dataReader.ReadRawData();
                     var result = _dataParser.ParseData(rawWeatherData);
-                    _weatherReportPublisher.ChangeWeatherData(result);
+                    _weatherReportPublisher.PublishData(result);
                 }
                 catch (Exception e)
                 {

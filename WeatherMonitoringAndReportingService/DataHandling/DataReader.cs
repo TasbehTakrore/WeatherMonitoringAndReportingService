@@ -1,6 +1,6 @@
 ﻿namespace WeatherMonitoringAndReportingService.DataHandling
 {
-    public class DataReader
+    public class DataReader : IDataReader
     {
         public string ReadRawData()
         {

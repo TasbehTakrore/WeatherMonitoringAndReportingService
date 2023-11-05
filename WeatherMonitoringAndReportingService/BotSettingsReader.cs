@@ -3,7 +3,7 @@ using WeatherMonitoringAndReportingService.Models;
 
 namespace WeatherMonitoringAndReportingService
 {
-    public class BotSettingsReader
+    public class BotSettingsReader : IBotSettingsReader
     {
         private readonly IConfiguration _configuration;
         public BotSettingsReader(IConfiguration configuration)
