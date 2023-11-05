@@ -11,18 +11,21 @@ namespace WeatherService.Test.WeatherReportPublishingTests
         [AutoData]
         public void Run_ShouldActivateBot_WhenTemperatureIsLessThanThreshold(
             [Frozen] BotSettings botSettings, WeatherData weatherData,
-            ConsoleOutputCapture consoleOutputCapture, SnowBot sut)
+            SnowBot sut)
         {
             //Arrange
             botSettings.TemperatureThreshold = 0;
             weatherData.Temperature = -2;
 
+            var writer = new StringWriter();
+            Console.SetOut(writer);
+
             //Act
             sut.Run(weatherData);
-            var captureOutput = consoleOutputCapture.GetCapturedOutput();
+            var consoleOutput = writer.ToString();
             //Assert
-            captureOutput.Should().NotBeNull();
-            captureOutput.Should().Contain("SnowBot activated!");
+            consoleOutput.Should().NotBeNull();
+            consoleOutput.Should().Contain("SnowBot activated!");
         }
 
         [Theory]
