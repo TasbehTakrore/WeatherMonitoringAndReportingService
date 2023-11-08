@@ -2,7 +2,7 @@
 
 namespace WeatherMonitoringAndReportingService.BotFactory
 {
-    internal interface IWeatherBotFactory
+    public interface IWeatherBotFactory
     {
         List<IWeatherObserver> GetEnabledWeatherObservers();
     }

@@ -5,7 +5,7 @@ using WeatherMonitoringAndReportingService.Models;
 
 namespace WeatherMonitoringAndReportingService.DataHandling.DataParsing
 {
-    internal class XmlParsingStrategy : IDataParsingStrategy
+    public class XmlParsingStrategy : IDataParsingStrategy
     {
         public WeatherData ParseData(string data)
         {

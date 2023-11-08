@@ -3,11 +3,11 @@ using WeatherMonitoringAndReportingService.WeatherReportPublishing;
 
 namespace WeatherMonitoringAndReportingService.BotFactory
 {
-    internal class WeatherBotFactory : IWeatherBotFactory
+    public class WeatherBotFactory : IWeatherBotFactory
     {
-        private readonly BotSettingsReader _botSettingsReader;
+        private readonly IBotSettingsReader _botSettingsReader;
 
-        public WeatherBotFactory(BotSettingsReader botSettingsReader)
+        public WeatherBotFactory(IBotSettingsReader botSettingsReader)
         {
             _botSettingsReader = botSettingsReader;
         }
@@ -25,9 +25,9 @@ namespace WeatherMonitoringAndReportingService.BotFactory
 
                 return enabledBots;
             }
-            catch (Exception ex)
+            catch
             {
-                throw new Exception("Failed to create bots. An error occurred while initializing bot instances." + ex);
+                throw new Exception("Failed to create bots. An error occurred while initializing bot instances.");
             }
         }
     }

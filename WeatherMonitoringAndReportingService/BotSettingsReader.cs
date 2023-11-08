@@ -1,10 +1,9 @@
-﻿
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using WeatherMonitoringAndReportingService.Models;
 
 namespace WeatherMonitoringAndReportingService
 {
-    internal class BotSettingsReader
+    public class BotSettingsReader : IBotSettingsReader
     {
         private readonly IConfiguration _configuration;
         public BotSettingsReader(IConfiguration configuration)
@@ -13,14 +12,12 @@ namespace WeatherMonitoringAndReportingService
         }
         public BotSettings GetBotSettings(string key)
         {
-            try
-            {
-                return _configuration.GetSection(key).Get<BotSettings>();
-            }
-            catch
+            var botSettings = _configuration.GetSection(key).Get<BotSettings>();
+            if (botSettings == null)
             {
                 throw new Exception($"No BotSettings found for key '{key}'");
             }
+            return botSettings;
         }
     }
 }

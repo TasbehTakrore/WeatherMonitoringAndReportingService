@@ -3,7 +3,7 @@ using WeatherMonitoringAndReportingService.Models;
 
 namespace WeatherMonitoringAndReportingService.WeatherReportPublishing
 {
-    internal class SnowBot : IWeatherObserver
+    public class SnowBot : IWeatherObserver
     {
         private readonly BotSettings _botSettings;
 

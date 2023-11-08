@@ -4,15 +4,15 @@ using WeatherMonitoringAndReportingService.WeatherReportPublishing;
 
 namespace WeatherMonitoringAndReportingService.ConsoleInterface
 {
-    internal class UserConsoleInterface : IUserConsoleInterface
+    public class UserConsoleInterface : IUserConsoleInterface
     {
-        private readonly DataParsingStrategyFactory _dataParsingStrategyFactory;
-        private readonly WeatherReportPublisher _weatherReportPublisher;
-        private readonly DataReader _dataReader;
+        private readonly IDataParser _dataParser;
+        private readonly IWeatherReportPublisher _weatherReportPublisher;
+        private readonly IDataReader _dataReader;
 
-        public UserConsoleInterface(DataParsingStrategyFactory dataParsingStrategyFactory, WeatherReportPublisher weatherReportPublisher, DataReader dataReader)
+        public UserConsoleInterface(IDataParser dataParser, IWeatherReportPublisher weatherReportPublisher, IDataReader dataReader)
         {
-            _dataParsingStrategyFactory = dataParsingStrategyFactory;
+            _dataParser = dataParser;
             _weatherReportPublisher = weatherReportPublisher;
             _dataReader = dataReader;
         }
@@ -25,10 +25,8 @@ namespace WeatherMonitoringAndReportingService.ConsoleInterface
                 {
                     Console.Write("Enter Raw Weather Data (json or xml format): ");
                     string rawWeatherData = _dataReader.ReadRawData();
-                    var parsingStrategy = _dataParsingStrategyFactory.CreateDataParsingStrategy(rawWeatherData);
-                    var parser = new DataParserContext(parsingStrategy);
-                    var result = parser.ParseData(rawWeatherData);
-                    _weatherReportPublisher.ChangeWeatherData(result);
+                    var result = _dataParser.ParseData(rawWeatherData);
+                    _weatherReportPublisher.PublishData(result);
                 }
                 catch (Exception e)
                 {

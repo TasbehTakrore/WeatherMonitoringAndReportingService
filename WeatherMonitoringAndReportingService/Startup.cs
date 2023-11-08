@@ -6,16 +6,26 @@ using WeatherMonitoringAndReportingService.WeatherReportPublishing;
 
 namespace WeatherMonitoringAndReportingService
 {
-    internal static class Startup
+    public static class Startup
     {
-        public static (DataParsingStrategyFactory, WeatherReportPublisher, DataReader) InitializeWeatherMonitoringService()
+        public static object CreateAndSubscribeWeatherReportPublisher()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static (IDataParser, IWeatherReportPublisher, IDataReader) InitializeWeatherMonitoringService()
         {
             IConfiguration configuration = BuildConfiguration();
             BotSettingsReader botSettingReader = new BotSettingsReader(configuration);
-            WeatherBotFactory weatherBotFactory = new WeatherBotFactory(botSettingReader);
-            DataParsingStrategyFactory parsingStrategyFactory = new DataParsingStrategyFactory();
-            DataReader dataReader = new DataReader();
-            return (parsingStrategyFactory, CreateAndSubscribeWeatherReportPublisher(weatherBotFactory), dataReader);
+            IWeatherBotFactory weatherBotFactory = new WeatherBotFactory(botSettingReader);
+            List<IDataParsingStrategy> parsingStrategies = new List<IDataParsingStrategy>
+            {
+                new XmlParsingStrategy(),
+                new JsonParsingStrategy()
+            };
+            IDataParser dataParser = new DataParser(parsingStrategies);
+            IDataReader dataReader = new DataReader();
+            return (dataParser, CreateAndSubscribeWeatherReportPublisher(weatherBotFactory), dataReader);
         }
 
         private static IConfiguration BuildConfiguration()
@@ -26,7 +36,7 @@ namespace WeatherMonitoringAndReportingService
                 .Build();
         }
 
-        private static WeatherReportPublisher CreateAndSubscribeWeatherReportPublisher(WeatherBotFactory factory)
+        private static WeatherReportPublisher CreateAndSubscribeWeatherReportPublisher(IWeatherBotFactory factory)
         {
             WeatherReportPublisher weatherReportPublisher = new WeatherReportPublisher();
             var bots = factory.GetEnabledWeatherObservers();

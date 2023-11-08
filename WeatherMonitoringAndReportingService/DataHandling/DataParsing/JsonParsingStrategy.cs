@@ -3,7 +3,7 @@ using WeatherMonitoringAndReportingService.Models;
 
 namespace WeatherMonitoringAndReportingService.DataHandling.DataParsing
 {
-    internal class JsonParsingStrategy : IDataParsingStrategy
+    public class JsonParsingStrategy : IDataParsingStrategy
     {
         public WeatherData ParseData(string data)
         {
